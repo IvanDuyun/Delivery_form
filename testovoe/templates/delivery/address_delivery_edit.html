@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Editing delivery for {{ address.name }}{% endblock %}
+
+{% block content %}
+  <form action="" method="post" enctype="multipart/form-data">
+
+    {% for hidden_field in form.hidden_fields %}
+      {{ hidden_field.errors }}
+      {{ hidden_field }}
+    {% endfor %}
+
+    {% csrf_token %}
+
+    {{ form.management_form }}
+    {{ form.non_form_errors }}
+
+    <h3>Update Collection</h3>
+    {% for delivery_form in form.forms %}
+      <hr>
+      <h5>
+        {% if delivery_form.instance.id %}
+          Delivery: {{ delivery_form.instance.title|title }}
+        {% else %}
+          {% if form.forms|length > 1 %}
+            Add another delivery
+          {% else %}
+            Add a delivery
+          {% endif %}
+        {% endif %}
+      </h5>
+      {% for hidden_field in delivery_form.hidden_fields %}
+        {{ hidden_field.errors }}
+      {% endfor %}
+      <table>
+        {{ delivery_form.as_table }}
+      </table>
+    {% endfor %}
+    <hr>
+    <p>
+      <button type="submit" value="Update collection" class="btn btn-primary w-100 mb-3">Update Collection</button>
+      <a href="{{ address.get_absolute_url  }}" role="button" class="btn btn-secondary w-100">Cancel</a>
+    </p>
+  </form>
+
+{% endblock content %}

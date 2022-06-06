@@ -12,10 +12,10 @@ class Type(models.Model):
         return self.name
 
 class Address(models.Model):
-    address = models.CharField('Адрес', max_length=250, blank=True)
+    name = models.CharField('Адрес', max_length=250, blank=False, null=False)
 
-    class Meta:
-        db_table = 'address'
+    def get_absolute_url(self):
+        return reverse('delivery:address_detail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.address
@@ -25,15 +25,10 @@ class Delivery(models.Model):
     type = models.ForeignKey(Type, on_delete=models.CASCADE)
     delivery_date = models.DateField('Дата доставки', blank=True, null=True)
     attachment = models.FileField('Вложение', upload_to='uploads/', blank=True, null=True)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = 'delivery'
+    address = models.ForeignKey('Address', on_delete=models.CASCADE, blank=False,
+                                null=False, related_name='delivery_address')
 
     def __str__(self):
         return self.name
-
-    def get_absolute_url(self):
-        return reverse('delivery_new')
 
 

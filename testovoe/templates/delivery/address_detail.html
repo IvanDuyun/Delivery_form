@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ address.name }}{% endblock %}
+
+{% block content %}
+
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <h3>Address Delivery Details</h3>
+    <div class="d-flex d-flex-inline"><span class="pe-2">Addresses name:</span> <h5>{{ Address.name|title }}</h5></div>
+    <hr>
+        {% for delivery in address.delivery_address.all %}
+        <div class="small">Delivery ID: {{ delivery.id }}</div>
+        <div>Название товара: {{ delivery.name  }}</div>
+        <div>Тип товара: {{ delivery.type  }}</div>
+        <div>Дата доставки: {{ delivery.delivery_date  }}</div>
+        <div>Вложение: {{ delivery.attachment  }}</div>
+        <hr>
+        {% endfor %}
+    <p>
+        <a href="{% url 'delivery:address_delivery_edit' pk=address.pk %}" role="button" class="btn btn-primary w-100 mb-2">Edit Address Delivery</a>
+        <a href="{% url 'delivery:list_address' %}" role="button" class="btn btn-secondary w-100">All Collection</a>
+    </p>
+
+
+{% endblock content %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Homepage{% endblock %}
+
+{% block content %}
+
+    <h3>Address Collections</h3>
+    <a href="{% url 'delivery:list_address' %}" role="button" class="btn btn-primary w-100 mb-2">All adresses</a>
+    <a href="{% url 'delivery:add_address' %}" role="button" class="btn btn-secondary w-100">Add an delivery</a>
+
+{% endblock content %}
